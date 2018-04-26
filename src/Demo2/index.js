@@ -1,6 +1,9 @@
 import Feact from '../Feact/Feact'
 import FeactDOM from '../Feact/FeactDOM'
 
+// demo-2
+// 这里实现一个组件的基本生命周期 
+
 class App {
     componentWillReceiveProps() {
         console.log('App will reveice props')

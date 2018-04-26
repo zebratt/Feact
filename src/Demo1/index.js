@@ -1,6 +1,8 @@
 import Feact from '../Feact/Feact'
 import FeactDOM from '../Feact/FeactDOM'
 
+// demo-1
+// 实现最基本的功能，虚拟dom到真实dom的转换，这里不涉及dom变化
 const Header = (props) => {
     return (
         <div className="header">
