@@ -1,29 +1,37 @@
 class FeactDOM {
+    createChildren(targetNode, children) {
+        if (children && children.length) {
+            for (let i = 0; i < children.length; i++) {
+                let nextNode = null
+
+                if (typeof children[i] === 'string') {
+                    nextNode = document.createElement('span')
+                    nextNode.innerText = children[i]
+                } else {
+                    nextNode = this.createRealNode(children[i])
+                }
+
+                targetNode.appendChild(nextNode)
+            }
+        }
+    }
     createRealNode(element) {
         const node = document.createElement(element.tag)
 
-        if (element.attrs) {
-            Object.keys(element.attrs).map(key => {
-                const attrKey = key === 'className' ? 'class' : key
-                const value = element.attrs[key]
-
-                node.setAttribute(attrKey, value)
-            })
-        }
-
-        if (element.children && element.children.length) {
-            for (let i = 0; i < element.children.length; i++) {
-                let nextNode = null
-
-                if(typeof element.children[i] === 'string'){
-                    nextNode = document.createElement('span')
-                    nextNode.innerText = element.children[i]
-                }else{
-                    nextNode = this.createRealNode(element.children[i])
+        if (element.props) {
+            Object.keys(element.props).map(key => {
+                switch (key) {
+                    case 'children':
+                        this.createChildren(node, element.props['children'])
+                        break
+                    case 'className':
+                        node.setAttribute('class', element.props['className'])
+                        break
+                    default:
+                        node.setAttribute(key, value)
+                        break
                 }
-
-                node.appendChild(nextNode)
-            }
+            })
         }
 
         return node

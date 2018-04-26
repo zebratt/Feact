@@ -1,13 +1,22 @@
+import flattenDeep from 'lodash/flattenDeep'
+
 class Feact {
-    createElement(tag, attrs, ...children){
-        if(typeof tag === 'function'){
-            return tag(attrs, ...children)
+    createElement(tag, props, ...children) {
+        if (typeof tag === 'function' ) {
+            // 如果有render方法，则将其视为组件，否则视为纯函数
+            // TODO: check一下其他库这里是如何判断的
+            if(tag.prototype.render){
+                const instance = new tag()
+
+                return instance.render()
+            }else{
+                return tag(Object.assign({}, props, { children }))
+            }
         }
 
         return {
             tag,
-            attrs,
-            children
+            props: Object.assign({}, props, { children: flattenDeep(children) })
         }
     }
 }
