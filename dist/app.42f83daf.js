@@ -77,7 +77,7 @@ parcelRequire = (function (modules, cache, entry) {
 
   // Override the current require with this new one
   return newRequire;
-})({9:[function(require,module,exports) {
+})({16:[function(require,module,exports) {
 /**
  * Appends the elements of `values` to `array`.
  *
@@ -99,14 +99,14 @@ function arrayPush(array, values) {
 
 module.exports = arrayPush;
 
-},{}],18:[function(require,module,exports) {
+},{}],32:[function(require,module,exports) {
 var global = (1,eval)("this");
 /** Detect free variable `global` from Node.js. */
 var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
 
 module.exports = freeGlobal;
 
-},{}],16:[function(require,module,exports) {
+},{}],26:[function(require,module,exports) {
 var freeGlobal = require('./_freeGlobal');
 
 /** Detect free variable `self`. */
@@ -117,7 +117,7 @@ var root = freeGlobal || freeSelf || Function('return this')();
 
 module.exports = root;
 
-},{"./_freeGlobal":18}],11:[function(require,module,exports) {
+},{"./_freeGlobal":32}],20:[function(require,module,exports) {
 var root = require('./_root');
 
 /** Built-in value references. */
@@ -125,7 +125,7 @@ var Symbol = root.Symbol;
 
 module.exports = Symbol;
 
-},{"./_root":16}],19:[function(require,module,exports) {
+},{"./_root":26}],36:[function(require,module,exports) {
 var Symbol = require('./_Symbol');
 
 /** Used for built-in method references. */
@@ -173,7 +173,7 @@ function getRawTag(value) {
 
 module.exports = getRawTag;
 
-},{"./_Symbol":11}],20:[function(require,module,exports) {
+},{"./_Symbol":20}],37:[function(require,module,exports) {
 /** Used for built-in method references. */
 var objectProto = Object.prototype;
 
@@ -197,7 +197,7 @@ function objectToString(value) {
 
 module.exports = objectToString;
 
-},{}],17:[function(require,module,exports) {
+},{}],33:[function(require,module,exports) {
 var Symbol = require('./_Symbol'),
     getRawTag = require('./_getRawTag'),
     objectToString = require('./_objectToString');
@@ -227,7 +227,7 @@ function baseGetTag(value) {
 
 module.exports = baseGetTag;
 
-},{"./_Symbol":11,"./_getRawTag":19,"./_objectToString":20}],15:[function(require,module,exports) {
+},{"./_Symbol":20,"./_getRawTag":36,"./_objectToString":37}],28:[function(require,module,exports) {
 /**
  * Checks if `value` is object-like. A value is object-like if it's not `null`
  * and has a `typeof` result of "object".
@@ -258,7 +258,7 @@ function isObjectLike(value) {
 
 module.exports = isObjectLike;
 
-},{}],14:[function(require,module,exports) {
+},{}],27:[function(require,module,exports) {
 var baseGetTag = require('./_baseGetTag'),
     isObjectLike = require('./isObjectLike');
 
@@ -278,7 +278,7 @@ function baseIsArguments(value) {
 
 module.exports = baseIsArguments;
 
-},{"./_baseGetTag":17,"./isObjectLike":15}],12:[function(require,module,exports) {
+},{"./_baseGetTag":33,"./isObjectLike":28}],21:[function(require,module,exports) {
 var baseIsArguments = require('./_baseIsArguments'),
     isObjectLike = require('./isObjectLike');
 
@@ -316,7 +316,7 @@ var isArguments = baseIsArguments(function() { return arguments; }()) ? baseIsAr
 
 module.exports = isArguments;
 
-},{"./_baseIsArguments":14,"./isObjectLike":15}],13:[function(require,module,exports) {
+},{"./_baseIsArguments":27,"./isObjectLike":28}],22:[function(require,module,exports) {
 /**
  * Checks if `value` is classified as an `Array` object.
  *
@@ -344,7 +344,7 @@ var isArray = Array.isArray;
 
 module.exports = isArray;
 
-},{}],10:[function(require,module,exports) {
+},{}],17:[function(require,module,exports) {
 var Symbol = require('./_Symbol'),
     isArguments = require('./isArguments'),
     isArray = require('./isArray');
@@ -366,7 +366,7 @@ function isFlattenable(value) {
 
 module.exports = isFlattenable;
 
-},{"./_Symbol":11,"./isArguments":12,"./isArray":13}],8:[function(require,module,exports) {
+},{"./_Symbol":20,"./isArguments":21,"./isArray":22}],14:[function(require,module,exports) {
 var arrayPush = require('./_arrayPush'),
     isFlattenable = require('./_isFlattenable');
 
@@ -406,7 +406,7 @@ function baseFlatten(array, depth, predicate, isStrict, result) {
 
 module.exports = baseFlatten;
 
-},{"./_arrayPush":9,"./_isFlattenable":10}],7:[function(require,module,exports) {
+},{"./_arrayPush":16,"./_isFlattenable":17}],12:[function(require,module,exports) {
 var baseFlatten = require('./_baseFlatten');
 
 /** Used as references for various `Number` constants. */
@@ -433,7 +433,7 @@ function flattenDeep(array) {
 
 module.exports = flattenDeep;
 
-},{"./_baseFlatten":8}],5:[function(require,module,exports) {
+},{"./_baseFlatten":14}],8:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -485,7 +485,7 @@ var Feact = function () {
 }();
 
 exports.default = new Feact();
-},{"lodash/flattenDeep":7}],6:[function(require,module,exports) {
+},{"lodash/flattenDeep":12}],9:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -563,7 +563,7 @@ var FeactDOM = function () {
 }();
 
 exports.default = new FeactDOM();
-},{}],25:[function(require,module,exports) {
+},{}],6:[function(require,module,exports) {
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -625,11 +625,11 @@ var App = function () {
 }();
 
 _FeactDOM2.default.render(_Feact2.default.createElement(App, null), document.getElementById('root'));
-},{"../Feact/Feact":5,"../Feact/FeactDOM":6}],2:[function(require,module,exports) {
+},{"../Feact/Feact":8,"../Feact/FeactDOM":9}],4:[function(require,module,exports) {
 'use strict';
 
 require('./demos/demo-2');
-},{"./demos/demo-2":25}],21:[function(require,module,exports) {
+},{"./demos/demo-2":6}],40:[function(require,module,exports) {
 
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -659,7 +659,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '54945' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '64286' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 
@@ -798,5 +798,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[21,2])
+},{}]},{},[40,4])
 //# sourceMappingURL=/app.42f83daf.map
