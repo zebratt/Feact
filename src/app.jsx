@@ -1,2 +1,2 @@
-// import './demos/demo-1'
-import './demos/demo-2'
+// import './Demo1'
+import './Demo2'
