@@ -1,6 +1,3 @@
-/**
- * componentWillMount 的执行时机是什么？在组件render方法之前执行
- */
 function createChildren(targetNode, vnode) {
     const { children, instance } = vnode
 
@@ -8,11 +5,11 @@ function createChildren(targetNode, vnode) {
         let nextNode = null
 
         switch (typeof children[i]) {
-            case 'string':
-                nextNode = document.createTextNode(children[i])
+            case 'object':
+                nextNode = createRealNode(children[i])
                 break
             default:
-                nextNode = createRealNode(children[i])
+                nextNode = document.createTextNode(children[i])
                 break
         }
 
@@ -23,16 +20,9 @@ function createChildren(targetNode, vnode) {
 function createRealNode(vnode) {
     const node = document.createElement(vnode.tag)
 
-    if (vnode.props) {
-        Object.keys(vnode.props).forEach(key => {
-            switch (key) {
-                case 'className':
-                    node.setAttribute('class', vnode.props['className'])
-                    break
-                default:
-                    node.setAttribute(key, value)
-                    break
-            }
+    if (vnode.attrs) {
+        Object.keys(vnode.attrs).forEach(key => {
+            setAttribute(key, vnode.attrs, node)
         })
     }
 
@@ -47,17 +37,38 @@ function createRealNode(vnode) {
     return node
 }
 
+function setAttribute(key, attrs, targetNode) {
+    if (key === 'className') {
+        targetNode.setAttribute('class', attrs['className'])
+    } else if (/^on\w+/.test(key)) {
+        targetNode[key.toLowerCase()] = attrs[key]
+    } else {
+        targetNode.setAttribute(key, attrs[key])
+    }
+}
+
+let _vnode = null
+let _container = null
+
 function render(vnode, container) {
-    if (!vnode) {
+    if (!vnode && !_vnode) {
         throw new Error('vnode can not be empty!')
     }
 
-    if (!container) {
+    if (!container && !_container) {
         throw new Error('container can not be empty')
     }
 
-    container.innerHTML = ''
-    container.appendChild(createRealNode(vnode))
+    if (_vnode && _container) {
+        _container.innerHTML = ''
+        _container.appendChild(createRealNode(_vnode))
+    } else {
+        _vnode = vnode
+        _container = container
+
+        container.innerHTML = ''
+        container.appendChild(createRealNode(vnode))
+    }
 }
 
 export default {
