@@ -47,28 +47,17 @@ function setAttribute(key, attrs, targetNode) {
     }
 }
 
-let _vnode = null
-let _container = null
-
 function render(vnode, container) {
-    if (!vnode && !_vnode) {
+    if (!vnode) {
         throw new Error('vnode can not be empty!')
     }
 
-    if (!container && !_container) {
+    if (!container) {
         throw new Error('container can not be empty')
     }
 
-    if (_vnode && _container) {
-        _container.innerHTML = ''
-        _container.appendChild(createRealNode(_vnode))
-    } else {
-        _vnode = vnode
-        _container = container
-
-        container.innerHTML = ''
-        container.appendChild(createRealNode(vnode))
-    }
+    container.innerHTML = ''
+    container.appendChild(createRealNode(vnode))
 }
 
 export default {

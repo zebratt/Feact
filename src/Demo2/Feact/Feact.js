@@ -1,6 +1,5 @@
 import flattenDeep from 'lodash/flattenDeep'
 import omit from 'lodash/omit'
-import FeactDOM from './FeactDOM'
 
 function createElement(tag, attrs, ...children) {
     if (typeof tag === 'function') {
@@ -31,9 +30,7 @@ class Component {
         this.props = {}
     }
     setState(newState) {
-        debugger
         this.state = newState
-        FeactDOM.render()
     }
 }
 
