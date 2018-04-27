@@ -15,6 +15,7 @@ class Feact {
         }
 
         return {
+            type: 'FeactVisualDom',
             tag,
             props: Object.assign({}, props, { children: flattenDeep(children) })
         }

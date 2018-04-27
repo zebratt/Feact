@@ -5,8 +5,7 @@ class FeactDOM {
                 let nextNode = null
 
                 if (typeof children[i] === 'string') {
-                    nextNode = document.createElement('span')
-                    nextNode.innerText = children[i]
+                    nextNode = document.createTextNode(children[i])
                 } else {
                     nextNode = this.createRealNode(children[i])
                 }

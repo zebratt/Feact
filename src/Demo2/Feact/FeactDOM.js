@@ -4,11 +4,13 @@ class FeactDOM {
             for (let i = 0; i < children.length; i++) {
                 let nextNode = null
 
-                if (typeof children[i] === 'string') {
-                    nextNode = document.createElement('span')
-                    nextNode.innerText = children[i]
-                } else {
-                    nextNode = this.createRealNode(children[i])
+                switch (typeof children[i]) {
+                    case 'string':
+                        nextNode = document.createTextNode(children[i])
+                        break
+                    default:
+                        nextNode = this.createRealNode(children[i])
+                        break
                 }
 
                 targetNode.appendChild(nextNode)
@@ -45,6 +47,7 @@ class FeactDOM {
             throw new Error('container can not be empty')
         }
 
+        container.innerHTML = ''
         container.appendChild(this.createRealNode(element))
     }
 }
