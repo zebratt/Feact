@@ -1,25 +1,31 @@
-import flattenDeep from 'lodash/flattenDeep'
-
-class Feact {
-    createElement(tag, props, ...children) {
-        if (typeof tag === 'function' ) {
-            // 如果有render方法，则将其视为组件，否则视为纯函数
-            // TODO: check一下其他库这里是如何判断的
-            if(tag.prototype.render){
-                const instance = new tag()
-
-                return instance.render()
-            }else{
-                return tag(Object.assign({}, props, { children }))
-            }
+function createElement(tag, props, ...children) {
+    if (typeof tag === 'function') {
+        if (!tag.prototype.render) {
+            throw new Error(`class ${tag.name} has not a render method!`)
         }
 
-        return {
-            type: 'FeactVisualDom',
-            tag,
-            props: Object.assign({}, props, { children: flattenDeep(children) })
-        }
+        const instance = new tag()
+
+        instance.componentWillMount && instance.componentWillMount()
+
+        const vnode = instance.render()
+
+        return Object.assign({}, vnode, { type: 'FeactComponent', instance })
+    }
+
+    return {
+        type: 'FeactElement',
+        tag,
+        props,
+        children
     }
 }
 
-export default new Feact()
+class Component {
+    setState() {}
+}
+
+export default {
+    createElement,
+    Component
+}
