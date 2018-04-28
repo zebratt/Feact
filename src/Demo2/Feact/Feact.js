@@ -4,7 +4,6 @@ import FeactDOM from './FeactDOM'
 
 function createElement(tag, attrs, ...children) {
     return {
-        type: 'FeactElement',
         tag,
         attrs,
         children: flattenDeep(children)

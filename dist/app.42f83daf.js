@@ -3948,7 +3948,6 @@ function createElement(tag, attrs) {
     }
 
     return {
-        type: 'FeactElement',
         tag: tag,
         attrs: attrs,
         children: (0, _flattenDeep2.default)(children)
