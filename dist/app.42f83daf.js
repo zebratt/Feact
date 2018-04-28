@@ -3819,65 +3819,7 @@ function flattenDeep(array) {
 
 module.exports = flattenDeep;
 
-},{"./_baseFlatten":91}],5:[function(require,module,exports) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _omit = require('lodash/omit');
-
-var _omit2 = _interopRequireDefault(_omit);
-
-var _flattenDeep = require('lodash/flattenDeep');
-
-var _flattenDeep2 = _interopRequireDefault(_flattenDeep);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function createElement(tag, attrs) {
-    for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-        children[_key - 2] = arguments[_key];
-    }
-
-    return {
-        type: 'FeactElement',
-        tag: tag,
-        attrs: attrs,
-        children: (0, _flattenDeep2.default)(children)
-    };
-}
-
-var Component = function () {
-    function Component() {
-        var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-        _classCallCheck(this, Component);
-
-        this.props = props;
-        this.state = {};
-    }
-
-    _createClass(Component, [{
-        key: 'setState',
-        value: function setState(newState) {
-            Object.assign(this.state, newState);
-        }
-    }]);
-
-    return Component;
-}();
-
-exports.default = {
-    createElement: createElement,
-    Component: Component
-};
-},{"lodash/omit":9,"lodash/flattenDeep":147}],6:[function(require,module,exports) {
+},{"./_baseFlatten":91}],6:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3903,7 +3845,23 @@ function setAttributes(key, attrs, targetNode) {
 }
 
 function renderComponent(component) {
-    return _render(component.render());
+    if (!component.dom && component.componentWillMount) {
+        component.componentWillMount();
+    }
+
+    var dom = _render(component.render());
+
+    if (component.dom && component.dom.parentNode) {
+        component.dom.parentNode.replaceChild(dom, component.dom);
+    }
+
+    if (!component.dom && component.componentDidMount) {
+        component.componentDidMount();
+    }
+
+    component.dom = dom;
+
+    return dom;
 }
 
 function createComponent(Component, props) {
@@ -3951,10 +3909,78 @@ function render(vnode, container) {
     container.appendChild(_render(vnode));
 }
 
+function flush(component) {
+    renderComponent(component);
+}
+
 exports.default = {
-    render: render
+    render: render,
+    flush: flush
 };
-},{"./Feact":5}],3:[function(require,module,exports) {
+},{"./Feact":5}],5:[function(require,module,exports) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _omit = require('lodash/omit');
+
+var _omit2 = _interopRequireDefault(_omit);
+
+var _flattenDeep = require('lodash/flattenDeep');
+
+var _flattenDeep2 = _interopRequireDefault(_flattenDeep);
+
+var _FeactDOM = require('./FeactDOM');
+
+var _FeactDOM2 = _interopRequireDefault(_FeactDOM);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function createElement(tag, attrs) {
+    for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        children[_key - 2] = arguments[_key];
+    }
+
+    return {
+        type: 'FeactElement',
+        tag: tag,
+        attrs: attrs,
+        children: (0, _flattenDeep2.default)(children)
+    };
+}
+
+var Component = function () {
+    function Component() {
+        var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        _classCallCheck(this, Component);
+
+        this.props = props;
+        this.state = {};
+    }
+
+    _createClass(Component, [{
+        key: 'setState',
+        value: function setState(newState) {
+            Object.assign(this.state, newState);
+            _FeactDOM2.default.flush(this);
+        }
+    }]);
+
+    return Component;
+}();
+
+exports.default = {
+    createElement: createElement,
+    Component: Component
+};
+},{"lodash/omit":9,"lodash/flattenDeep":147,"./FeactDOM":6}],3:[function(require,module,exports) {
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -4086,7 +4112,7 @@ _FeactDOM2.default.render(_Feact2.default.createElement(App, null), document.get
 'use strict';
 
 require('./Demo2');
-},{"./Demo2":3}],145:[function(require,module,exports) {
+},{"./Demo2":3}],148:[function(require,module,exports) {
 
 var OVERLAY_ID = '__parcel__error__overlay__';
 
@@ -4255,5 +4281,5 @@ function hmrAccept(bundle, id) {
     return hmrAccept(global.parcelRequire, id);
   });
 }
-},{}]},{},[145,2])
+},{}]},{},[148,2])
 //# sourceMappingURL=/app.42f83daf.map

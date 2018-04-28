@@ -11,7 +11,23 @@ function setAttributes(key, attrs, targetNode) {
 }
 
 function renderComponent(component) {
-    return _render(component.render())
+    if(!component.dom && component.componentWillMount){
+        component.componentWillMount()
+    }
+
+    const dom = _render(component.render())
+
+    if(component.dom && component.dom.parentNode){
+        component.dom.parentNode.replaceChild( dom, component.dom );
+    }
+
+    if(!component.dom && component.componentDidMount){
+        component.componentDidMount()
+    }
+
+    component.dom = dom
+
+    return dom
 }
 
 function createComponent(Component, props) {
@@ -59,6 +75,11 @@ function render(vnode, container) {
     container.appendChild(_render(vnode))
 }
 
+function flush(component){
+    renderComponent(component)
+}
+
 export default {
-    render
+    render,
+    flush
 }
