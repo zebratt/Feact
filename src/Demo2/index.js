@@ -1,6 +1,5 @@
 import Feact from './Feact/Feact'
 import FeactDOM from './Feact/FeactDOM'
-import { dirname } from 'path';
 
 // demo-2
 // 这里实现一个组件的基本生命周期
@@ -19,7 +18,6 @@ class App extends Feact.Component {
         console.log('App did mount')
     }
     render() {
-        console.dir(this)
         return (
             <div className="app">
                 <Header count={this.state.count}>custom header text</Header>

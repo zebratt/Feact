@@ -1,22 +1,7 @@
-import flattenDeep from 'lodash/flattenDeep'
 import omit from 'lodash/omit'
+import flattenDeep from 'lodash/flattenDeep'
 
 function createElement(tag, attrs, ...children) {
-    if (typeof tag === 'function') {
-        if (!tag.prototype.render) {
-            throw new Error(`class ${tag.name} has not a render method!`)
-        }
-
-        const instance = new tag()
-        
-        instance.componentWillMount && instance.componentWillMount()
-
-        instance.props.children = children
-        Object.assign(instance.props, omit(attrs, ['className', 'children']))
-
-        return Object.assign({}, instance.render(), { type: 'FeactComponent', instance })
-    }
-
     return {
         type: 'FeactElement',
         tag,
@@ -26,11 +11,12 @@ function createElement(tag, attrs, ...children) {
 }
 
 class Component {
-    constructor(){
-        this.props = {}
+    constructor(props = {}) {
+        this.props = props
+        this.state = {}
     }
     setState(newState) {
-        this.state = newState
+        Object.assign(this.state, newState)
     }
 }
 
