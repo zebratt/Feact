@@ -24,9 +24,11 @@ class App extends Feact.Component {
                 <h1>this is app</h1>
                 <button
                     onClick={() => {
-                        this.setState({
-                            count: this.state.count + 1
-                        })
+                        for (let i = 0; i < 10; i++) {
+                            this.setState({
+                                count: this.state.count + 1
+                            })
+                        }
                     }}
                 >
                     click to add count
