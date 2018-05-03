@@ -1,5 +1,7 @@
 import Feact from './Feact/Feact'
 import FeactDOM from './Feact/FeactDOM'
+// import Feact from 'react'
+// import FeactDOM from 'react-dom'
 
 // demo-2
 // 这里实现一个组件的基本生命周期
@@ -25,8 +27,12 @@ class App extends Feact.Component {
                 <button
                     onClick={() => {
                         for (let i = 0; i < 10; i++) {
+                            const newCount = this.state.count + 1
+
+                            console.log('newCount:', newCount);
+
                             this.setState({
-                                count: this.state.count + 1
+                                count: newCount
                             })
                         }
                     }}
@@ -44,6 +50,12 @@ class Header extends Feact.Component {
     }
     componentDidMount() {
         console.log('Header did mount')
+    }
+    componentWillUpdate(){
+        console.log('Header will update');
+    }
+    componentDidUpdate(){
+        console.log('Header did update');
     }
     render() {
         return (

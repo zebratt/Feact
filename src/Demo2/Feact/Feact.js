@@ -17,11 +17,13 @@ class Component {
         this.stateQueue = []
     }
     setState(newState) {
-        Object.assign(this.state, newState)
-
-        FeactDOM.flush(this)
+        // Object.assign(this.state, newState)
+        // FeactDOM.flush(this)
+        // this.stateQueue.push(newState)
     }
-    enqueueState(newState) {}
+    enqueueState(newState) {
+        
+    }
 }
 
 export default {
