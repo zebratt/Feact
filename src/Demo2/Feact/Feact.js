@@ -14,15 +14,10 @@ class Component {
     constructor(props = {}) {
         this.props = props
         this.state = {}
-        this.stateQueue = []
     }
     setState(newState) {
-        // Object.assign(this.state, newState)
-        // FeactDOM.flush(this)
-        // this.stateQueue.push(newState)
-    }
-    enqueueState(newState) {
-        
+        Object.assign(this.state, newState)
+        FeactDOM.flush(this)
     }
 }
 

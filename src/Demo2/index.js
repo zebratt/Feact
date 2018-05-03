@@ -26,15 +26,9 @@ class App extends Feact.Component {
                 <h1>this is app</h1>
                 <button
                     onClick={() => {
-                        for (let i = 0; i < 10; i++) {
-                            const newCount = this.state.count + 1
-
-                            console.log('newCount:', newCount);
-
-                            this.setState({
-                                count: newCount
-                            })
-                        }
+                        this.setState({
+                            count: this.state.count + 1
+                        })
                     }}
                 >
                     click to add count
@@ -51,11 +45,11 @@ class Header extends Feact.Component {
     componentDidMount() {
         console.log('Header did mount')
     }
-    componentWillUpdate(){
-        console.log('Header will update');
+    componentWillUpdate() {
+        console.log('Header will update')
     }
-    componentDidUpdate(){
-        console.log('Header did update');
+    componentDidUpdate() {
+        console.log('Header did update')
     }
     render() {
         return (
